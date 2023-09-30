@@ -1,0 +1,28 @@
+{% extends 'accounts/base.html' %}
+{% load accounts_tags %}
+
+{% block content %}
+<table border=0 cellpadding="0" cellspacing="0">
+    <tr class="bold">
+        <td>Логин + Email</td>
+        <td>Пароль</td>
+        <td>Дата регистрации</td>
+        <td>Дата последнего доступа</td>
+        <td>URL</td>
+    </tr>
+
+{% getusers as data_users %}
+
+{% for d in data_users %}
+    <tr><td colspan="5"><hr>{{d.login}}</td></tr>
+    <tr><td class="text_small" width="250px">{{d.email}}</td>
+        <td class="text_small" width="150px">{{d.password}}</td>
+        <td class="text_small" width="250px">{{d.created_time}}</td>
+        <td class="text_small" width="250px">{{d.updated_time}}</td>
+        <td class="text_small" width="150px">{{d.slug}}</td>
+    </tr>
+
+{% endfor %}
+
+</table>
+{% endblock %}

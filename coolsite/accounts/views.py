@@ -7,16 +7,41 @@ from .models import Account
 from django.contrib import messages
 import requests
 
-menu = ["Аккаунты"]
+menu = [{'title': 'Главная', 'url_name': 'account'},
+        {'title': 'Аккаунты', 'url_name': 'view'},
+        #{'title': 'Изменить', 'url_name': 'update_user'},
+        #{'title': 'Удалить', 'url_name': 'delete_user'},
+        {'title': 'Регистрация', 'url_name': 'registration'},
+        {'title': 'Войти', 'url_name': 'login'}
+        ]
 
 
 def index(request): #HttpRequest
-        return render(request, 'accounts/index.html', {'menu': menu, 'title': 'Главная страница'})
+    context = {
+        'menu': menu,
+        'title': 'Главная страница'
+    }
+    return render(request, 'accounts/index.html', context=context)
 
 def viewData(request):
     users = Account.objects.all()
-    return render(request, 'accounts/view.html', {'users': users, 'menu': menu, 'title': 'Аккаунты'})
+    #users = get_object_or_404(Account)
+    context = {
+        'menu': menu,
+        'title': 'Аккаунты'
+    }
+    return render(request, 'accounts/view.html', context=context)
 
+#def registration(request):
+#    context = {
+#        'menu': menu,
+#        'title': 'Регистрация'
+#    }
+#    return render(request, 'accounts/registration.html', context=context)
+
+#def show_post(request):
+#    context = {'menu': menu, 'title': 'Читать пост'}
+#    return render(request, 'accounts/index.html', context=context)
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1> Страница не найдена </h1>')
