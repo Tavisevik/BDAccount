@@ -51,6 +51,8 @@ div.article-panel {
 div.article-panel p.first {
     margin: 0;
     float: left;
+    font-size:8px;
+
 }
 div.article-panel p.last {
     margin: 0;

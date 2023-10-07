@@ -1,20 +1,14 @@
-from django.shortcuts import render
-
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+from django.views.generic import ListView
+# from django.core.paginator import Paginator
+
+from .forms import RegistrationForm
 from .models import Account
+from .utils import *
 from django.contrib import messages
 import requests
-
-menu = [{'title': 'Главная', 'url_name': 'account'},
-        {'title': 'Аккаунты', 'url_name': 'view'},
-        #{'title': 'Изменить', 'url_name': 'update_user'},
-        #{'title': 'Удалить', 'url_name': 'delete_user'},
-        {'title': 'Регистрация', 'url_name': 'registration'},
-        {'title': 'Войти', 'url_name': 'login'}
-        ]
-
 
 def index(request): #HttpRequest
     context = {
@@ -23,21 +17,54 @@ def index(request): #HttpRequest
     }
     return render(request, 'accounts/index.html', context=context)
 
-def viewData(request):
-    users = Account.objects.all()
-    #users = get_object_or_404(Account)
+class RegistrationView(DataMixin, ListView):
+
+    model = Account
+    # paginate_by = 4
+    # paginate_orphans = 2
+    template_name = 'accounts/view.html'
+    context_object_name = 'data_users'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Регистрация')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        #return Account.objects.filter(login__contains='sya')
+        return Account.objects.filter()
+
+# def viewData(request):
+#     users = Account.objects.all()
+#     #users = get_object_or_404(Account)
+#     context = {
+#         'menu': menu,
+#         'title': 'Аккаунты'
+#     }
+#     return render(request, 'accounts/view.html', context=context)
+
+
+def registration(request):
+
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            #print(form.cleaned_data)
+            try:
+                Account.objects.create(**form.cleaned_data)
+                #form.save()
+                return redirect('home')
+            except:
+                form.add_error(None, 'Ошибка добавления аккаунта')
+
+    else:
+        form = RegistrationForm()
     context = {
         'menu': menu,
-        'title': 'Аккаунты'
+        'title': 'Регистрация',
+        'form': form,
     }
-    return render(request, 'accounts/view.html', context=context)
-
-#def registration(request):
-#    context = {
-#        'menu': menu,
-#        'title': 'Регистрация'
-#    }
-#    return render(request, 'accounts/registration.html', context=context)
+    return render(request, 'accounts/registration.html', context)
 
 #def show_post(request):
 #    context = {'menu': menu, 'title': 'Читать пост'}

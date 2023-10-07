@@ -3,26 +3,35 @@
 
 {% block content %}
 <table border=0 cellpadding="0" cellspacing="0">
-    <tr class="bold">
-        <td>Логин + Email</td>
-        <td>Пароль</td>
-        <td>Дата регистрации</td>
-        <td>Дата последнего доступа</td>
-        <td>URL</td>
+    <tr class="bold"  style="font-size:20px;">
+        <td width="250">Логин + Email</td>
+        <td width="200">Пароль</td>
+        <td width="200">Дата регистрации</td>
+        <td width="200">Дата последнего доступа</td>
+        <td width="100">URL</td>
     </tr>
-
-{% getusers as data_users %}
-
-{% for d in data_users %}
-    <tr><td colspan="5"><hr>{{d.login}}</td></tr>
-    <tr><td class="text_small" width="250px">{{d.email}}</td>
-        <td class="text_small" width="150px">{{d.password}}</td>
-        <td class="text_small" width="250px">{{d.created_time}}</td>
-        <td class="text_small" width="250px">{{d.updated_time}}</td>
-        <td class="text_small" width="150px">{{d.slug}}</td>
-    </tr>
-
-{% endfor %}
-
 </table>
+{% getusers as data_users %}
+<ul class="list-articles">
+{% for d in data_users %}
+    <li>
+        <h4>{{d.login}}</h4>
+        <div class="article-panel">
+        <p class="first" style=" width: 200px; font-size:18px;">{{d.email}}</p>
+        <p class="first" style=" width: 200px; font-size:18px;">{{d.password}}</p>
+        <p class="first" style=" width: 200px; font-size:18px;">{{d.created_time}}</p>
+        <p class="first" style=" width: 200px; font-size:18px;">{{d.updated_time}}</p>
+        <p class="first" style=" width: 150;  font-size:18px;">{{d.slug}}</p>
+            </div>
+<!--    <tr><td colspan="5"><hr>{{d.login}}</td></tr>-->
+<!--    <tr><td class="text_small" width="250px">{{d.email}}</td>-->
+<!--        <td class="text_small" width="150px">{{d.password}}</td>-->
+<!--        <td class="text_small" width="250px">{{d.created_time}}</td>-->
+<!--        <td class="text_small" width="250px">{{d.updated_time}}</td>-->
+<!--        <td class="text_small" width="150px">{{d.slug}}</td>-->
+<!--    </tr>-->
+    </li>
+{% endfor %}
+</ul>
+
 {% endblock %}
