@@ -127,3 +127,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+AUTHENTICATION_BACKENDS = ('dataInfo.backends.CustomerAuthBackend', 'django.contrib.auth.backends.ModelBackend',)
+
+# в случае ошибки переходить на главную страницу
+# LOGIN_REDIRECT_URL = '/'

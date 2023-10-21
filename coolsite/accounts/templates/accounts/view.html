@@ -1,37 +1,30 @@
 {% extends 'accounts/base.html' %}
-{% load accounts_tags %}
+<!-- {% load accounts_tags %} -->
 
 {% block content %}
 <table border=0 cellpadding="0" cellspacing="0">
     <tr class="bold"  style="font-size:20px;">
-        <td width="250">Логин + Email</td>
+        <td width="250">Имя + Email</td>
         <td width="200">Пароль</td>
         <td width="200">Дата регистрации</td>
         <td width="200">Дата последнего доступа</td>
-        <td width="100">URL</td>
     </tr>
 </table>
-{% getusers as data_users %}
 <ul class="list-articles">
-{% for d in data_users %}
-    <li>
-        <h4>{{d.login}}</h4>
-        <div class="article-panel">
-        <p class="first" style=" width: 200px; font-size:18px;">{{d.email}}</p>
-        <p class="first" style=" width: 200px; font-size:18px;">{{d.password}}</p>
-        <p class="first" style=" width: 200px; font-size:18px;">{{d.created_time}}</p>
-        <p class="first" style=" width: 200px; font-size:18px;">{{d.updated_time}}</p>
-        <p class="first" style=" width: 150;  font-size:18px;">{{d.slug}}</p>
-            </div>
-<!--    <tr><td colspan="5"><hr>{{d.login}}</td></tr>-->
-<!--    <tr><td class="text_small" width="250px">{{d.email}}</td>-->
-<!--        <td class="text_small" width="150px">{{d.password}}</td>-->
-<!--        <td class="text_small" width="250px">{{d.created_time}}</td>-->
-<!--        <td class="text_small" width="250px">{{d.updated_time}}</td>-->
-<!--        <td class="text_small" width="150px">{{d.slug}}</td>-->
-<!--    </tr>-->
-    </li>
-{% endfor %}
+
+    {% for d in users %}
+        <li>
+            <h4>{{d.fullname}}</h4>
+            <div class="article-panel">
+            <p class="first" style=" width: 250px; font-size:18px;">{{d.email}}</p>
+            <p class="first" style=" width: 200px; font-size:18px;">{{d.password}}</p>
+            <p class="first" style=" width: 250px; font-size:18px;">{{d.created_time}}</p>
+            <p class="first" style=" width: 250px; font-size:18px;">{{d.updated_time}}</p>
+
+                </div>
+
+        </li>
+    {% endfor %}
 </ul>
 
 {% endblock %}
